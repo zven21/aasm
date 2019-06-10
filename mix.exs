@@ -1,7 +1,7 @@
 defmodule Aasm.MixProject do
   use Mix.Project
 
-  @version "0.1.0"
+  @version "0.2.0"
   @github "https://github.com/zven21/aasm"
 
   def project do
@@ -11,7 +11,7 @@ defmodule Aasm.MixProject do
       description: "The finite state machine implementations for Elixir.",
       elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
-      # aliases: aliases(),
+      aliases: aliases(),
       package: package(),
       elixirc_paths: elixirc_paths(Mix.env()),
       deps: deps()
@@ -28,9 +28,10 @@ defmodule Aasm.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:ex_doc, ">= 0.0.0", only: :dev}
-      # {:dep_from_hexpm, "~> 0.3.0"},
-      # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
+      {:ex_doc, ">= 0.0.0", only: :dev},
+      {:ecto_sql, "~> 3.0"},
+      {:postgrex, ">= 0.0.0", only: :test},
+      {:ex_machina, "~> 2.2", only: :test}
     ]
   end
 
@@ -43,17 +44,17 @@ defmodule Aasm.MixProject do
     ]
   end
 
-  defp elixirc_paths(:test), do: ["lib", "priv", "test/support"]
+  defp elixirc_paths(:test), do: ["lib", "priv", "test/support", "test/dummy"]
   defp elixirc_paths(_), do: ["lib"]
 
-  # defp aliases do
-  #   [
-  #     test: [
-  #       "ecto.drop --quiet",
-  #       "ecto.create --quiet",
-  #       "ecto.migrate --quiet",
-  #       "test"
-  #     ]
-  #   ]
-  # end
+  defp aliases do
+    [
+      test: [
+        "ecto.drop --quiet",
+        "ecto.create --quiet",
+        "ecto.migrate --quiet",
+        "test"
+      ]
+    ]
+  end
 end
